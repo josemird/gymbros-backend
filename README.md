@@ -1,3 +1,44 @@
+# 🏋️‍♂️ Gymbros - Encuentra tu compañero ideal de gimnasio  
+
+
+## 🚀 ¿Qué es Gymbros?  
+Gymbros es una plataforma web que te ayuda a encontrar compañeros de entrenamiento ideales según tus preferencias. Con Gymbros puedes:  
+
+✅ Buscar personas según gimnasio, edad y ejercicios favoritos.  
+✅ Guardar perfiles con "Like" para revisarlos más tarde.  
+✅ Chatear con otros usuarios para coordinar entrenamientos.  
+✅ Personalizar tu perfil con información relevante.  
+
+## 🛠️ Tecnologías utilizadas  
+Gymbros está desarrollado con:  
+
+### **Backend:**  
+- 🐘 **PHP (Laravel o PHP puro)** (API REST para la comunicación con el frontend)  
+- 🛢 **MySQL** (Base de datos para almacenar usuarios y mensajes)  
+
+### **Infraestructura:**  
+- 🌍 **VPS o Railway** (Apache, Linux, PHP y MySQL)  
+
+## 📌 Funcionalidades principales  
+- **🔐 Autenticación:** Registro y login con email y contraseña.  
+- **🏠 Home:** Lista de usuarios con filtros de búsqueda.  
+- **❤️ Likes:** Guarda perfiles que te interesan.  
+- **💬 Mensajes:** Chatea con otros usuarios.  
+- **👤 Perfil:** Personaliza tu información.  
+
+## 📂 Estructura del Proyecto  
+```bash
+📦 gymbros
+├── 📁 backend (PHP / Laravel)
+│   ├── 📁 app (Controladores y modelos)
+│   ├── 📁 database (Migraciones y seeds)
+│   ├── 📁 routes (Endpoints API REST)
+│   ├── 📄 .env (Configuraciones de base de datos)
+│   ├── 📄 README.md
+└── 📄 README.md (Este archivo)
+```
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
