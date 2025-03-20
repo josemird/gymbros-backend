@@ -31,6 +31,7 @@ class userController extends Controller
             'gym' => 'required',
             'age' => 'required',
             'favorite_exercises' => 'required',
+            'goals' => 'required',
             'hobbies' => 'required'
         ]);
 
