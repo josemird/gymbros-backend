@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('gym')->nullable();
             $table->integer('age')->nullable();
             $table->text('favorite_exercises')->nullable();
+            $table->text('goals')->nullable();
             $table->text('hobbies')->nullable();
             $table->rememberToken();
             $table->timestamps();
