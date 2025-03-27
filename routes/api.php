@@ -9,25 +9,14 @@ use App\Http\Controllers\userController;
 // })->middleware('auth:sanctum');
 
 
+Route::get('/user', [userController::class, 'index']);
 
-//Route::get('/users', function (){
-//    return 'obteniendo lista de usuarios';
-//});
+Route::get('/user/{id}', [userController::class, 'show']);
 
-Route::get('/users', [userController::class, 'index']);
+Route::post('/user', [userController::class, 'store']);
 
-Route::get('/users/{id}', function (){
-    return 'obteniendo un usuario';
-});
+Route::put('/user/{id}', [userController::class, 'update']);
 
-Route::post('/users', function (){
-    return 'creando usuarios';
-});
+Route::patch('/user/{id}', [userController::class, 'updatePartial']);
 
-Route::put('/users/{id}', function (){
-    return 'actualizando usuario';
-});
-
-Route::delete('/users/{id}', function (){
-    return 'eliminando usuario';
-});
+Route::delete('/user/{id}', [userController::class, 'destroy']);
