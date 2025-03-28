@@ -11,12 +11,12 @@ class MessageController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $messages = Message::where('sender_id', $userId)
+        $message = Message::where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
             ->orderBy('sent_at', 'desc')
             ->get();
 
-        return response()->json($messages);
+        return response()->json($message);
     }
 
     public function store(Request $request)

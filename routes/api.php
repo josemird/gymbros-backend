@@ -20,12 +20,12 @@ Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/messages', [MessageController::class, 'index']);
-    Route::post('/messages', [MessageController::class, 'store']);
-    Route::patch('/messages/{id}/read', [MessageController::class, 'markAsRead']);
+    Route::get('/message', [MessageController::class, 'index']);
+    Route::post('/message', [MessageController::class, 'store']);
+    Route::patch('/message/{id}/read', [MessageController::class, 'markAsRead']);
 
-    Route::get('/likes', [LikeController::class, 'index']);
-    Route::post('/likes', [LikeController::class, 'store']);
-    Route::delete('/likes/{id}', [LikeController::class, 'destroy']);
+    Route::get('/like', [LikeController::class, 'index']);
+    Route::post('/like', [LikeController::class, 'store']);
+    Route::delete('/like/{id}', [LikeController::class, 'destroy']);
 
 });

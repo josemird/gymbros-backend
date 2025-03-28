@@ -11,9 +11,9 @@ class LikeController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $likes = Like::where('user_id', $userId)->get();
+        $like = Like::where('user_id', $userId)->get();
 
-        return response()->json($likes);
+        return response()->json($like);
     }
 
     public function store(Request $request)
