@@ -5,10 +5,16 @@ use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+//use App\Http\Controllers\AuthController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+
+//toDo Crear el controlador y el modelo y ver como implantar el sanctum
+//Route::post('/register', [AuthController::class, 'register']);
+//Route::post('/login', [AuthController::class, 'login']);
+//Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 
 Route::get('/user', [UserController::class, 'index']);
