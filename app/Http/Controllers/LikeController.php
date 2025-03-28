@@ -2,64 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Like;
 use Illuminate\Http\Request;
+use App\Models\Like;
+use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $userId = Auth::id();
+        $likes = Like::where('user_id', $userId)->get();
+
+        return response()->json($likes);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'liked_user_id' => 'required|exists:users,id',
+        ]);
+
+        $like = Like::create([
+            'user_id' => Auth::id(),
+            'liked_user_id' => $request->liked_user_id,
+        ]);
+
+        return response()->json($like, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Like $like)
+    public function destroy($id)
     {
-        //
-    }
+        $like = Like::where('user_id', Auth::id())->where('liked_user_id', $id)->firstOrFail();
+        $like->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Like $like)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Like $like)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Like $like)
-    {
-        //
+        return response()->json(['message' => 'Like removed']);
     }
 }

@@ -2,64 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $userId = Auth::id();
+        $messages = Message::where('sender_id', $userId)
+            ->orWhere('receiver_id', $userId)
+            ->orderBy('sent_at', 'desc')
+            ->get();
+
+        return response()->json($messages);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'receiver_id' => 'required|exists:users,id',
+            'content' => 'required|string',
+        ]);
+
+        $message = Message::create([
+            'sender_id' => Auth::id(),
+            'receiver_id' => $request->receiver_id,
+            'content' => $request->content,
+            'sent_at' => now(),
+            'read' => false,
+        ]);
+
+        return response()->json($message, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Message $message)
+    public function markAsRead($id)
     {
-        //
-    }
+        $message = Message::findOrFail($id);
+        $message->update(['read' => true]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Message $message)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Message $message)
-    {
-        //
+        return response()->json(['message' => 'Message marked as read']);
     }
 }
