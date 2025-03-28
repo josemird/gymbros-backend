@@ -26,7 +26,9 @@ class User extends Authenticatable
         'gym',
         'age',
         'favorite_exercises',
+        'goals',
         'hobbies'
+
     ];
 
     /**
