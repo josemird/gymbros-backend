@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -20,6 +20,23 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function show($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'El usuario no existe',
+                'status' => 404
+            ], 404);
+        }
+
+        return response()->json([
+            'user' => $user,
+            'status' => 200
+        ], 200);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -27,12 +44,12 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'username' => 'required',
-            'photo' => 'required',
-            'gym' => 'required',
-            'age' => 'required|digits_between:1,3|numeric',
-            'favorite_exercises' => 'required',
-            'goals' => 'required',
-            'hobbies' => 'required'
+            'photo' => 'nullable',
+            'gym' => 'nullable',
+            'age' => 'nullable|digits_between:1,3|numeric',
+            'favorite_exercises' => 'nullable',
+            'goals' => 'nullable',
+            'hobbies' => 'nullable'
         ]);
 
         if ($validator->fails()) {
@@ -62,51 +79,15 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function show($id)
-    {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'El usuario no existe',
-                'status' => 404
-            ], 404);
-        }
-
-        return response()->json([
-            'user' => $user,
-            'status' => 200
-        ], 200);
-    }
-
-    public function destroy($id)
-    {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'El usuario no existe',
-                'status' => 404
-            ], 404);
-        }
-
-        $user->delete();
-
-        return response()->json([
-            'message' => 'Usuario eliminado',
-            'status' => 200
-        ], 200);
-    }
-
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        if (Auth::id() !== (int) $id) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
 
+        $user = User::find($id);
         if (!$user) {
-            return response()->json([
-                'message' => 'El usuario no existe',
-                'status' => 404
-            ], 404);
+            return response()->json(['message' => 'El usuario no existe'], 404);
         }
 
         $validator = Validator::make($request->all(), [
@@ -114,20 +95,16 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:8',
             'username' => 'required',
-            'photo' => 'required',
-            'gym' => 'required',
-            'age' => 'required|digits_between:1,3|numeric',
-            'favorite_exercises' => 'required',
-            'goals' => 'required',
-            'hobbies' => 'required'
+            'photo' => 'nullable',
+            'gym' => 'nullable',
+            'age' => 'nullable|digits_between:1,3|numeric',
+            'favorite_exercises' => 'nullable',
+            'goals' => 'nullable',
+            'hobbies' => 'nullable'
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Error al validar los datos',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ], 400);
+            return response()->json(['errors' => $validator->errors()], 400);
         }
 
         $user->update([
@@ -143,53 +120,53 @@ class UserController extends Controller
             'hobbies' => $request->hobbies
         ]);
 
-        return response()->json([
-            'message' => 'Usuario actualizado',
-            'user' => $user,
-            'status' => 200
-        ], 200);
+        return response()->json(['user' => $user], 200);
     }
 
     public function updatePartial(Request $request, $id)
     {
-        $user = User::find($id);
+        if (Auth::id() !== (int) $id) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
 
+        $user = User::find($id);
         if (!$user) {
-            return response()->json([
-                'message' => 'El usuario no existe',
-                'status' => 404
-            ], 404);
+            return response()->json(['message' => 'El usuario no existe'], 404);
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'max:255',
             'email' => 'email|unique:users,email,' . $id,
             'password' => 'nullable|min:8',
             'age' => 'digits_between:1,3|numeric'
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Error al validar los datos',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ], 400);
+            return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        $user->fill($request->only([
-            'name', 'email', 'username', 'photo', 'gym', 'age', 'favorite_exercises', 'goals', 'hobbies'
-        ]));
-
+        $user->fill($request->except('password'));
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
 
         $user->save();
 
-        return response()->json([
-            'message' => 'Usuario actualizado',
-            'user' => $user,
-            'status' => 200
-        ], 200);
+        return response()->json(['user' => $user], 200);
+    }
+
+    public function destroy($id)
+    {
+        if (Auth::id() !== (int) $id) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'El usuario no existe'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'Usuario eliminado correctamente'], 200);
     }
 }

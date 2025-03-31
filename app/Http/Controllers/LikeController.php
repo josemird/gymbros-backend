@@ -11,13 +11,9 @@ class LikeController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-        $likes = Like::where('user_id', $userId)->get();
+        $likes = Like::where('user_id', Auth::id())->get();
 
-        return response()->json([
-            'likes' => $likes,
-            'status' => 200
-        ], 200);
+        return response()->json(['likes' => $likes], 200);
     }
 
     public function store(Request $request)
@@ -27,23 +23,15 @@ class LikeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Error al validar los datos',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ], 400);
+            return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        // Verificar si ya existe un "Like" entre estos usuarios
-        $existingLike = Like::where('user_id', Auth::id())
+        $exists = Like::where('user_id', Auth::id())
             ->where('liked_user_id', $request->liked_user_id)
-            ->first();
+            ->exists();
 
-        if ($existingLike) {
-            return response()->json([
-                'message' => 'Ya has dado Like a este usuario',
-                'status' => 409
-            ], 409);
+        if ($exists) {
+            return response()->json(['message' => 'Ya has dado like a este usuario'], 409);
         }
 
         $like = Like::create([
@@ -51,29 +39,21 @@ class LikeController extends Controller
             'liked_user_id' => $request->liked_user_id,
         ]);
 
-        return response()->json([
-            'message' => 'Like agregado',
-            'data' => $like,
-            'status' => 201
-        ], 201);
+        return response()->json(['like' => $like], 201);
     }
 
     public function destroy($id)
     {
-        $like = Like::where('user_id', Auth::id())->where('liked_user_id', $id)->first();
+        $like = Like::where('user_id', Auth::id())
+            ->where('liked_user_id', $id)
+            ->first();
 
         if (!$like) {
-            return response()->json([
-                'message' => 'No existe este Like',
-                'status' => 404
-            ], 404);
+            return response()->json(['message' => 'No se encontró el like'], 404);
         }
 
         $like->delete();
 
-        return response()->json([
-            'message' => 'Like eliminado',
-            'status' => 200
-        ], 200);
+        return response()->json(['message' => 'Like eliminado'], 200);
     }
 }
