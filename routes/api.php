@@ -38,3 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/like/{id}', [LikeController::class, 'destroy']);
 
 });
+
+Route::middleware('auth:sanctum')->get('/debug-token', function (Request $request) {
+    return response()->json([
+        'user' => $request->user(),
+        'token' => $request->bearerToken(),
+    ]);
+});
