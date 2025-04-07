@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use Laravel\Sanctum\PersonalAccessToken;
 
 
 // Rutas de autenticación (públicas)
@@ -35,12 +36,40 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/like', [LikeController::class, 'index']);
     Route::post('/like', [LikeController::class, 'store']);
     Route::delete('/like/{id}', [LikeController::class, 'destroy']);
+
+    Route::get('/test_auth', function (\Illuminate\Http\Request $request) {
+        return response()->json([
+            'user_id' => optional($request->user())->id,
+            'class' => optional($request->user())::class,
+            'guard' => auth()->getDefaultDriver(),
+            'token' => $request->bearerToken(),
+            'auth_user' => auth()->user(),
+        ]);
+    });
+
 });
 
 // debug para inspeccionar el token
-Route::get('/debug-token', function (Request $request) {
+Route::get('/debug_token', function (Request $request) {
     return response()->json([
         'user' => $request->user(),
         'token' => $request->bearerToken(),
+    ]);
+});
+
+Route::get('/force_profile', function (Request $request) {
+    $token = $request->bearerToken();
+    $model = PersonalAccessToken::findToken($token);
+
+    if (! $model) {
+        return response()->json(['error' => 'Token inválido'], 401);
+    }
+
+    $user = $model->tokenable;
+
+    return response()->json([
+        'id' => $user->id,
+        'email' => $user->email,
+        'username' => $user->username,
     ]);
 });
