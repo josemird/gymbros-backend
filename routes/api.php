@@ -18,34 +18,34 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 // Rutas protegidas por Sanctum (requieren token Bearer)
 Route::middleware('auth:sanctum')->group(function () {
 
-    // Ruta simplificada de perfil para testear funcionamiento del token
     Route::get('/profile', function (Request $request) {
-        return response()->json($request->user());
+        return response()->json([
+            'id' => $request->user()->id,
+            'email' => $request->user()->email,
+            'name' => $request->user()->name,
+        ]);
     });
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // CRUD de usuarios
     Route::post('/user', [UserController::class, 'store']);
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::patch('/user/{id}', [UserController::class, 'updatePartial']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
-    // Mensajes
     Route::get('/message', [MessageController::class, 'index']);
     Route::post('/message', [MessageController::class, 'store']);
     Route::patch('/message/{id}/read', [MessageController::class, 'markAsRead']);
 
-    // Likes
     Route::get('/like', [LikeController::class, 'index']);
     Route::post('/like', [LikeController::class, 'store']);
     Route::delete('/like/{id}', [LikeController::class, 'destroy']);
+});
 
-    // Extra: debug para inspeccionar el token enviado
-    Route::get('/debug-token', function (Request $request) {
-        return response()->json([
-            'user' => $request->user(),
-            'token' => $request->bearerToken(),
-        ]);
-    });
+// debug para inspeccionar el token
+Route::get('/debug-token', function (Request $request) {
+    return response()->json([
+        'user' => $request->user(),
+        'token' => $request->bearerToken(),
+    ]);
 });
