@@ -26,8 +26,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
         App\Providers\AppServiceProvider::class,
         SanctumServiceProvider::class,
-
-
     ])
     ->withExceptions(function (Exceptions $exceptions) {
         //
