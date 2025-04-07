@@ -24,8 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withProviders([
+        Laravel\Sanctum\SanctumServiceProvider::class,
         App\Providers\AppServiceProvider::class,
-        SanctumServiceProvider::class,
+
     ])
     ->withExceptions(function (Exceptions $exceptions) {
         //
