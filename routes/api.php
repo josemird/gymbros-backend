@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+
 
 // Rutas de autenticación (públicas)
 Route::post('/register', [AuthController::class, 'register']);
@@ -18,14 +20,7 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 // Rutas protegidas por Sanctum (requieren token Bearer)
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/profile', function (Request $request) {
-        return response()->json([
-            'id' => $request->user()->id,
-            'email' => $request->user()->email,
-            'name' => $request->user()->name,
-        ]);
-    });
-    // Logout
+    Route::get('/profile', [ProfileController::class, 'show']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/user', [UserController::class, 'store']);
