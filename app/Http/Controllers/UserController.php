@@ -165,8 +165,10 @@ class UserController extends Controller
             return response()->json(['message' => 'El usuario no existe'], 404);
         }
 
+        $user->tokens()->delete();
+
         $user->delete();
 
-        return response()->json(['message' => 'Usuario eliminado correctamente'], 200);
+        return response()->json(['message' => 'Usuario eliminado correctamente y sesión cerrada'], 200);
     }
 }
