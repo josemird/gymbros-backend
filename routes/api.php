@@ -18,7 +18,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show']);
 
-// Rutas protegidas por Sanctum (requieren token Bearer)
+// Rutas protegidas por Sanctum (token Bearer)
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'show']);
@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::patch('/user/{id}', [UserController::class, 'updatePartial']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
+
 
     Route::get('/message', [MessageController::class, 'index']);
     Route::post('/message', [MessageController::class, 'store']);
