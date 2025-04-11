@@ -29,7 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/user/{id}', [UserController::class, 'updatePartial']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
-
     Route::get('/message', [MessageController::class, 'index']);
     Route::post('/message', [MessageController::class, 'store']);
     Route::patch('/message/{id}/read', [MessageController::class, 'markAsRead']);
