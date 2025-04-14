@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Like::class, 'liked_user_id');
     }
+
+    public function getPhotoAttribute($value)
+    {
+        return $value ? asset($value) : null;
+    }
 }

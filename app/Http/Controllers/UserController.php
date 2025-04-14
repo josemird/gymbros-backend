@@ -95,7 +95,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:8',
             'username' => 'required',
-            'photo' => 'nullable',
+            'photo' => 'nullable|image|max:2048',
             'gym' => 'nullable',
             'age' => 'nullable|digits_between:1,3|numeric',
             'favorite_exercises' => 'nullable',
@@ -107,12 +107,18 @@ class UserController extends Controller
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = uniqid('profile_') . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('public/photos', $filename);
+            $user->photo = 'storage/photos/' . $filename;
+        }
+
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
             'username' => $request->username,
-            'photo' => $request->photo,
             'gym' => $request->gym,
             'age' => $request->age,
             'favorite_exercises' => $request->favorite_exercises,
@@ -122,6 +128,7 @@ class UserController extends Controller
 
         return response()->json(['user' => $user], 200);
     }
+
 
     public function updatePartial(Request $request, $id)
     {
@@ -137,14 +144,23 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'email|unique:users,email,' . $id,
             'password' => 'nullable|min:8',
-            'age' => 'digits_between:1,3|numeric'
+            'age' => 'digits_between:1,3|numeric',
+            'photo' => 'nullable|image|max:2048',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        $user->fill($request->except('password'));
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = uniqid('profile_') . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('public/photos', $filename);
+            $user->photo = 'storage/photos/' . $filename;
+        }
+
+        $user->fill($request->except(['photo', 'password']));
+
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
@@ -153,6 +169,7 @@ class UserController extends Controller
 
         return response()->json(['user' => $user], 200);
     }
+
 
     public function destroy($id)
     {
