@@ -98,6 +98,35 @@ class UserController extends Controller
         return response()->json(['user' => $user], 200);
     }
 
+    public function updatePartial(Request $request, $id)
+    {
+        if (Auth::id() !== (int) $id) {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'sometimes|email|unique:users,email,' . $id,
+            'password' => 'nullable|min:8',
+            'age' => 'sometimes|digits_between:1,3|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $data = $request->except('password');
+
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return response()->json(['user' => $user], 200);
+    }
+
     public function destroy($id)
     {
         if (Auth::id() !== (int) $id) {
