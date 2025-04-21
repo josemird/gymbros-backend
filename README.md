@@ -17,7 +17,7 @@ Gymbros está desarrollado con:
 - 🛢 **MySQL** (Base de datos para almacenar usuarios y mensajes)  
 
 ### **Infraestructura:**  
-- 🌍 **VPS o Railway** (Apache, Linux, PHP y MySQL)  
+- 🌍 **VPS** (Apache, Linux, PHP y MySQL)  
 
 ## 📌 Funcionalidades principales  
 - **🔐 Autenticación:** Registro y login con email y contraseña.  
