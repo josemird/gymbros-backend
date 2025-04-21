@@ -11,7 +11,9 @@ class LikeController extends Controller
 {
     public function index()
     {
-        $likes = Like::where('user_id', Auth::id())->get();
+        $likes = Like::where('user_id', Auth::id())
+            ->with('likedUser')
+            ->get();
 
         return response()->json(['likes' => $likes], 200);
     }
