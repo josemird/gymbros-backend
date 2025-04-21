@@ -24,4 +24,5 @@ class Like extends Model
     {
         return $this->belongsTo(User::class, 'liked_user_id');
     }
+
 }
