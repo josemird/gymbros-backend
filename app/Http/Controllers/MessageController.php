@@ -12,7 +12,8 @@ class MessageController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $messages = Message::where('sender_id', $userId)
+        $messages = Message::with(['sender', 'receiver'])
+            ->where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
             ->orderBy('created_at', 'desc')
             ->get();
