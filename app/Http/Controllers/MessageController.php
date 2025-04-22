@@ -59,4 +59,5 @@ class MessageController extends Controller
 
         return response()->json(['message' => 'Mensaje marcado como leído'], 200);
     }
+
 }
