@@ -15,7 +15,7 @@ class MessageController extends Controller
         $messages = Message::with(['sender', 'receiver'])
             ->where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return response()->json(['messages' => $messages], 200);
