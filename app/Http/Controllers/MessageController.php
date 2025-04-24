@@ -35,7 +35,7 @@ class MessageController extends Controller
         $message = Message::create([
             'sender_id' => Auth::id(),
             'receiver_id' => $request->receiver_id,
-            'content' => $request->content,
+            'content' => (string) $request->input('content'),
             'read' => false,
             'sent_at' => now(),
         ]);
