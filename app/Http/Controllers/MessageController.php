@@ -60,15 +60,28 @@ class MessageController extends Controller
         return response()->json(['message' => 'Mensaje marcado como leído'], 200);
     }
 
-    public function unreadCount()
+    public function getUnreadMessages()
     {
         $userId = Auth::id();
 
         $unread = Message::where('receiver_id', $userId)
             ->where('read', false)
-            ->count();
+            ->get();
 
-        return response()->json(['unread' => $unread]);
+        return response()->json(['messages' => $unread]);
+    }
+
+    public function getUnreadCount()
+    {
+        $userId = Auth::id();
+
+        $counts = Message::where('receiver_id', $userId)
+            ->where('read', false)
+            ->selectRaw('sender_id, COUNT(*) as count')
+            ->groupBy('sender_id')
+            ->get();
+
+        return response()->json(['counts' => $counts]);
     }
 
 }
