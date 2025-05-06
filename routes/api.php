@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/message', [MessageController::class, 'index']);
     Route::post('/message', [MessageController::class, 'store']);
     Route::patch('/message/{id}/read', [MessageController::class, 'markAsRead']);
+    Route::get('/message/unread/count', [MessageController::class, 'unreadCount']);
 
     Route::get('/like', [LikeController::class, 'index']);
     Route::post('/like', [LikeController::class, 'store']);
