@@ -56,6 +56,11 @@ class User extends Authenticatable
 
     public function getPhotoAttribute($value)
     {
-        return $value ? asset($value) : null;
+        return $value ? asset('uploads/' . $value) : null;
+    }
+
+    public function gym()
+    {
+        return $this->belongsTo(Gym::class);
     }
 }

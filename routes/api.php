@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GymController;
 use Laravel\Sanctum\PersonalAccessToken;
 
 
@@ -17,6 +18,9 @@ Route::post('/login', [AuthController::class, 'login']);
 // Rutas públicas de usuarios
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show']);
+
+// Ruta pública gimnasios
+Route::get('/gyms', [GymController::class, 'index']);
 
 // Rutas protegidas por Sanctum (token Bearer)
 Route::middleware('auth:sanctum')->group(function () {
