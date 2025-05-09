@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('username')->unique();
             $table->text('photo')->nullable();
-            $table->foreignId('gym_id')->nullable()->constrained('gyms')->nullOnDelete();
+            $table->string('gym')->nullable();
             $table->integer('age')->nullable();
             $table->text('favorite_exercises')->nullable();
             $table->text('goals')->nullable();
