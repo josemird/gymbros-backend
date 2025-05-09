@@ -157,5 +157,4 @@ class UserController extends Controller
 
         return response()->json(['message' => 'No se subió ninguna imagen'], 400);
     }
-
 }
