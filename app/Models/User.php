@@ -58,9 +58,4 @@ class User extends Authenticatable
     {
         return $value ? asset('uploads/' . $value) : null;
     }
-
-    public function gym()
-    {
-        return $this->belongsTo(Gym::class);
-    }
 }
