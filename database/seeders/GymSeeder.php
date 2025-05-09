@@ -15,4 +15,5 @@ class GymSeeder extends Seeder {
             Gym::create(['name' => trim($name)]);
         }
     }
+
 }
