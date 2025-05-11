@@ -17,7 +17,7 @@ class User extends Authenticatable
         'password',
         'username',
         'photo',
-        'gym',
+        'gym_id',
         'age',
         'favorite_exercises',
         'goals',

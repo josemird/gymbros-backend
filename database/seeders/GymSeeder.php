@@ -12,8 +12,14 @@ class GymSeeder extends Seeder
     {
         $path = database_path('seeders/data/gyms.csv');
         $lines = File::lines($path);
+        $firstline = true;
 
         foreach ($lines as $line) {
+            if ($firstline) {
+                $firstline = false;
+                continue;
+            }
+
             $name = trim($line);
             if ($name !== '') {
                 Gym::firstOrCreate(['name' => $name]);
