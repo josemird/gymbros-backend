@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('username')->unique();
             $table->text('photo')->nullable();
-            $table->string('gym')->nullable();
+            $table->unsignedBigInteger('gym_id')->nullable();
             $table->integer('age')->nullable();
             $table->text('favorite_exercises')->nullable();
             $table->text('goals')->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
+            $table->foreign('gym_id')->references('id')->on('gyms')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
