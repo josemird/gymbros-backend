@@ -19,6 +19,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show']);
 
+// Ruta pública de gimnasios
+Route::get('/gyms', [GymController::class, 'index']);
+
+
 // Rutas protegidas por Sanctum (token Bearer)
 Route::middleware('auth:sanctum')->group(function () {
 
