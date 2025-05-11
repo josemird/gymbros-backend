@@ -12,13 +12,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::with('gym')->get();
         return response()->json(['users' => $users, 'status' => 200], 200);
     }
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('gym')->find($id);
 
         if (!$user) {
             return response()->json(['message' => 'El usuario no existe', 'status' => 404], 404);
@@ -35,7 +35,7 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'username' => 'required|unique:users,username',
             'photo' => 'nullable|string',
-            'gym' => 'nullable|string',
+            'gym_id' => 'nullable|string',
             'age' => 'nullable|digits_between:1,3|numeric',
             'favorite_exercises' => 'nullable|string',
             'goals' => 'nullable|string',
@@ -52,7 +52,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'username' => $request->username,
             'photo' => $request->photo,
-            'gym' => $request->gym,
+            'gym_id' => $request->gym,
             'age' => $request->age,
             'favorite_exercises' => $request->favorite_exercises,
             'goals' => $request->goals,
@@ -76,7 +76,7 @@ class UserController extends Controller
             'password' => 'nullable|min:8',
             'username' => 'sometimes|unique:users,username,' . $id,
             'photo' => 'nullable|string',
-            'gym' => 'nullable|string',
+            'gym_id' => 'nullable|string',
             'age' => 'nullable|digits_between:1,3|numeric',
             'favorite_exercises' => 'nullable|string',
             'goals' => 'nullable|string',

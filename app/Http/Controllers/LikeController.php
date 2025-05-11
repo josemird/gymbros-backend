@@ -12,7 +12,7 @@ class LikeController extends Controller
     public function index()
     {
         $likes = Like::where('user_id', Auth::id())
-            ->with('likedUser')
+            ->with('likedUser.gym')
             ->get();
 
         return response()->json(['likes' => $likes], 200);
