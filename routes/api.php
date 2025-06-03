@@ -39,7 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
     Route::post('/user/photo', [UserController::class, 'uploadPhoto']);
 
-
     Route::get('/message', [MessageController::class, 'index']);
     Route::post('/message', [MessageController::class, 'store']);
     Route::patch('/message/{id}/read', [MessageController::class, 'markAsRead']);
