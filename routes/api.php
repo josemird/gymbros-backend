@@ -8,6 +8,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GymController;
+use App\Http\Controllers\VerificationController;
 use Laravel\Sanctum\PersonalAccessToken;
 
 
@@ -15,13 +16,16 @@ use Laravel\Sanctum\PersonalAccessToken;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+// routes/api.php
+Route::post('/send-code', [VerificationController::class, 'sendCode']);
+Route::post('/verify-code', [VerificationController::class, 'verifyCode']);
+
 // Rutas públicas de usuarios
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show']);
 
 // Ruta pública de gimnasios
 Route::get('/gyms', [GymController::class, 'index']);
-
 
 // Rutas protegidas por Sanctum (token Bearer)
 Route::middleware('auth:sanctum')->group(function () {
