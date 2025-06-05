@@ -45,7 +45,7 @@ class VerificationController extends Controller
         $request->validate([
             'email' => 'required|email',
             'code' => 'required',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
             'type' => 'required|in:password_reset,register'
         ]);
 
