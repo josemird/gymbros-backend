@@ -113,11 +113,6 @@ npm install
 npm run dev
 ```
 
-> For a production build, replace `npm run dev` with:
-> ```bash
-> npm run prod
-> ```
-
 ## Running unit tests
 
 To execute your PHPUnit tests through Artisan, use:
