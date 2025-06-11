@@ -1,11 +1,12 @@
-# 🏋️‍♂️ Gymbros - Encuentra tu compañero ideal de gimnasio  
+# 🏋️‍♂️ Gymbros - Encuentra tu compañero ideal de gimnasio
+![PNG_LOGOTIPO_VERDE_GYMBROS](https://github.com/user-attachments/assets/f87fb8a6-a9f2-47b7-8491-c599e2733b0f)
 
 
 ## 🚀 ¿Qué es Gymbros?  
 Gymbros es una plataforma web que te ayuda a encontrar compañeros de entrenamiento ideales según tus preferencias. Con Gymbros puedes:  
 
-✅ Buscar personas según gimnasio, edad y ejercicios favoritos.  
-✅ Guardar perfiles con "Like" para revisarlos más tarde.  
+✅ Buscar personas según gimnasio, edad, ejercicios favoritos y hobbies.  
+✅ Guardar perfiles con "Fav" para revisarlos más tarde.  
 ✅ Chatear con otros usuarios para coordinar entrenamientos.  
 ✅ Personalizar tu perfil con información relevante.  
 
@@ -13,7 +14,7 @@ Gymbros es una plataforma web que te ayuda a encontrar compañeros de entrenamie
 Gymbros está desarrollado con:  
 
 ### **Backend:**  
-- 🐘 **PHP (Laravel o PHP puro)** (API REST para la comunicación con el frontend)  
+- 🐘 **Laravel 12** (API REST para la comunicación con el frontend)  
 - 🛢 **MySQL** (Base de datos para almacenar usuarios y mensajes)  
 
 ### **Infraestructura:**  
@@ -29,10 +30,17 @@ Gymbros está desarrollado con:
 ## 📂 Estructura del Proyecto  
 ```bash
 📦 gymbros
-├── 📁 backend (PHP / Laravel)
-│   ├── 📁 app (Controladores y modelos)
-│   ├── 📁 database (Migraciones y seeds)
+├── 📁 backend (Laravel)
+│   ├── 📁 app (Controladores, Middlewares, Modelos, Providers)
+│       ├── 📁 Http
+│       ├── 📁 Models
+│       ├── 📁 Providers
+│   ├── 📁 bootstrap
+│   ├── 📁 config (app. auth, database, sanctum, mail)
+│   ├── 📁 database (Migraciones, seeds y factories)
 │   ├── 📁 routes (Endpoints API REST)
+│   ├── 📁 storage
+│   ├── 📁 tests
 │   ├── 📄 .env (Configuraciones de base de datos)
 │   ├── 📄 README.md
 └── 📄 README.md (Este archivo)
