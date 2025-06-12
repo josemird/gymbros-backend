@@ -1,5 +1,7 @@
 <?php
 
+// Descripción: Controlador para manejar las operaciones CRUD de usuarios en una API RESTful, José Miguel Ramírez Domínguez.
+
 namespace App\Http\Controllers;
 
 use App\Models\User;

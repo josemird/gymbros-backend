@@ -1,5 +1,7 @@
 <?php
 
+// Descripción: Controlador para manejar la verificación de códigos de usuario en una API RESTful, José Miguel Ramírez Domínguez.
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

@@ -1,5 +1,7 @@
 <?php
 
+//Descripción: Rutas de la API RESTful para la aplicación, José Miguel Ramírez Domínguez.
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;

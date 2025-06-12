@@ -1,5 +1,7 @@
 <?php
 
+//Descripción: Controlador para obtener la lista de gimnasios disponibles en la API RESTful, José Miguel Ramírez Domínguez.
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

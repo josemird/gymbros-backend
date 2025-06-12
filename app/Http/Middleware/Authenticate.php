@@ -1,5 +1,7 @@
 <?php
 
+// Descripción: Middleware para autenticar usuarios en una API RESTful, José Miguel Ramírez Domínguez.
+
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;

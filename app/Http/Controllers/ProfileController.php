@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// Descripción: Controlador para manejar el perfil del usuario en una API RESTful, José Miguel Ramírez Domínguez.
+
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
