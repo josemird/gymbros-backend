@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function getPhotoAttribute($value)
     {
-        return $value ? asset('uploads/' . $value) : null;
+        return $value ? asset('storage/' . $value) : null;
     }
 
     public function gym()

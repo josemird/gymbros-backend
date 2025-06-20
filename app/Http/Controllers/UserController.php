@@ -148,13 +148,15 @@ class UserController extends Controller
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads'), $filename);
 
-            $user->photo = $filename;
+            // Guarda la imagen en storage/app/public/uploads
+            $path = $file->store('uploads', 'public');
+
+            // Guarda solo la ruta relativa en DB
+            $user->photo = $path;
             $user->save();
 
-            return response()->json(['photo' => $filename], 200);
+            return response()->json(['photo' => $path], 200);
         }
 
         return response()->json(['message' => 'No se subió ninguna imagen'], 400);
