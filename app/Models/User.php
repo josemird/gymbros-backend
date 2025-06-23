@@ -56,8 +56,21 @@ class User extends Authenticatable
 
     public function getPhotoAttribute($value)
     {
-        return $value ? asset('storage/' . $value) : null;
+        if (!$value) {
+            return null;
+        }
+
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            return $value;
+        }
+
+        return asset('storage/' . $value);
     }
+
+    //    public function getPhotoAttribute($value)
+    //    {
+    //        return $value ? asset('storage/' . $value) : null;
+    //    }
 
     public function gym()
     {
