@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 class UserController extends Controller
 {
@@ -147,18 +149,34 @@ class UserController extends Controller
         $user = $request->user();
 
         if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
+            $uploadedFileUrl = Cloudinary::upload($request->file('photo')->getRealPath())->getSecurePath();
 
-            // Guarda la imagen en storage/app/public/uploads
-            $path = $file->store('uploads', 'public');
-
-            // Guarda solo la ruta relativa en DB
-            $user->photo = $path;
+            $user->photo = $uploadedFileUrl; 
             $user->save();
 
-            return response()->json(['photo' => $path], 200);
+            return response()->json(['photo' => $uploadedFileUrl], 200);
         }
 
         return response()->json(['message' => 'No se subió ninguna imagen'], 400);
     }
+
+    //    public function uploadPhoto(Request $request)
+    //    {
+    //        $user = $request->user();
+    //
+    //        if ($request->hasFile('photo')) {
+    //            $file = $request->file('photo');
+    //
+    //            // Guarda la imagen en storage/app/public/uploads
+    //            $path = $file->store('uploads', 'public');
+    //
+    //            // Guarda solo la ruta relativa en DB
+    //            $user->photo = $path;
+    //            $user->save();
+    //
+    //            return response()->json(['photo' => $path], 200);
+    //        }
+    //
+    //        return response()->json(['message' => 'No se subió ninguna imagen'], 400);
+    //    }
 }
