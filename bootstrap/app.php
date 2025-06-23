@@ -18,10 +18,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ]);
 
-        $middleware->append([
-            \Illuminate\Http\Middleware\HandleCors::class,
-        ]);
-
         $middleware->group('api', [
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
