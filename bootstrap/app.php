@@ -16,7 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth' => \App\Http\Middleware\Authenticate::class,
             'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        ]);
 
+        $middleware->append([
+            \Illuminate\Http\Middleware\HandleCors::class,
         ]);
 
         $middleware->group('api', [
@@ -26,7 +29,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
         Laravel\Sanctum\SanctumServiceProvider::class,
         App\Providers\AppServiceProvider::class,
-
     ])
     ->withExceptions(function (Exceptions $exceptions) {
         //
