@@ -151,7 +151,7 @@ class UserController extends Controller
         if ($request->hasFile('photo')) {
             $uploadedFileUrl = Cloudinary::upload($request->file('photo')->getRealPath())->getSecurePath();
 
-            $user->photo = $uploadedFileUrl; 
+            $user->photo = $uploadedFileUrl;
             $user->save();
 
             return response()->json(['photo' => $uploadedFileUrl], 200);
@@ -176,7 +176,6 @@ class UserController extends Controller
     //
     //            return response()->json(['photo' => $path], 200);
     //        }
-    //
     //        return response()->json(['message' => 'No se subió ninguna imagen'], 400);
     //    }
 }
